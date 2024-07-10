@@ -32,12 +32,12 @@ import math
 
 # 4
 # dont forget to escape \, as well as ""
-import string
-
-print("\\ \"  \"\"  /\\")
-print(" )  ( ')")
-print("(  /  )")
-print(" \(__)| ")
+# import string
+#
+# print("\\ \"  \"\"  /\\")
+# print(" )  ( ')")
+# print("(  /  )")
+# print(" \(__)| ")
 
 # 5
 # ok, so unpacking input in this manner can work!
@@ -659,17 +659,59 @@ import math
 
 
 #36 brute-forcing filling algorithm with backtracking 50, 100, 500, 1000:
-num = input("Choose the amount that needs to be divided by")
-num_div = int(num)
-div_list = [0, 5, 10, 50, 100]
-res = 0
-cross_product = [i+j for i in div_list for j in div_list if (i+j) > 0]
-while(num_div >= 0):
-    for diver in cross_product:
-        if num_div % diver == 0:
-            res += 1
-    num_div -= 5
+# - this can't be done greedily, use dp with memoization
+# num = input("Choose the amount that needs to be divided by")
+# num_div = int(num)
+# div_list = [0, 5, 10, 50, 100]
+# res = 0
+# cross_product = [i+j for i in div_list for j in div_list if (i+j) > 0]
+# while(num_div >= 0):
+#     for diver in cross_product:
+#         if num_div % diver == 0:
+#             res += 1
+#     num_div -= 5
 
-print(cross_product)
-print(res)
+# print(cross_product)
+# print(res)
+
+def count_combinations(amount, bills):
+    memo = {}
+
+    def helper(remaining):
+        if remaining == 0:
+            return 1
+        if remaining < 0:
+            return 0
+        if remaining in memo:
+            return memo[remaining]
+
+        count = 0
+        for bill in bills:
+            count += helper(remaining - bill)
+
+        print(f"recursion depth increasing {count}")
+
+        memo[remaining] = count
+        return count
+
+    return helper(amount)
+
+
+num = int(input("Choose the amount that needs to be divided by: "))
+bills = [5, 10, 50, 100]
+
+
+result = count_combinations(num, bills)
+print(result)
+
+#37
+def to_mixed_case(name):
+    # ex_text2 = "__EXAMPLE__NAME__".lower()
+    # print((''.join(ex_text2.split('_'))))
+    if not any(char.isalpha() for char in name):
+        return ''
+    result = ''.join(word.capitalize() for word in name.split('_'))
+    return result[0].lower() + result[1:]
+
+#38
 
