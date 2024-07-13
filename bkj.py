@@ -715,11 +715,3 @@ def to_mixed_case(name):
 
 #38
 
-
-def redirect_new_home(adaptor, p1, p2):
-    return f'new_home/{p1}/{p2}'
-
-@app.route ('home')
-
-#37 continuing on BkJ projects...
-
