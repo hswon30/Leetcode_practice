@@ -57,5 +57,9 @@ try:
 
     driver.find_element(By.XPATH,'//*[@id="log.login"]').click()
     time.sleep(1000)
+    print("login successful")
 except:
     print("App was unable to login correctly")
+
+
+# login successful confirmation
