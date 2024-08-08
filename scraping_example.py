@@ -56,10 +56,58 @@ try:
     time.sleep(2)
 
     driver.find_element(By.XPATH,'//*[@id="log.login"]').click()
-    time.sleep(1000)
+    time.sleep(5)
     print("login successful")
 except:
     print("App was unable to login correctly")
 
 
-# login successful confirmation
+# 시계거래소 롤렉스 안전거래:  //*[@id="menuLink33"]
+# 시계거래소 롤렉스 거래:  //*[@id="menuLink832"]
+
+# 시계거래소 크롤링
+
+
+driver.get('https://cafe.naver.com/sweetdressroom')
+time.sleep(5)
+board_paths = ['//*[@id="menuLink33"]', '//*[@id="menuLink832"]']
+
+
+# Function to extract listings from a board
+def extract_listings_from_board(board_link):
+    driver.get(board_link)
+    time.sleep(5)
+
+    listings = driver.find_elements(By.CSS_SELECTOR, 'css_selector_for_listing_links')  # Adjust selector
+    listing_links = [listing.get_attribute('href') for listing in listings]
+
+    return listing_links
+
+
+all_listings = []
+
+for board in board_paths:
+    tgt = driver.find_element(By.XPATH, board)
+    driver.implicitly_wait(2)
+    tgt.click()
+
+    driver.switch_to.frame('cafe_main')
+
+    driver.find_element(By.XPATH, '//*[@id="main-area"]/div[4]/table/tbody/tr[1]/td[1]/div[2]/div/a[1]').click()
+    time.sleep(1000)
+
+
+# works up to this point
+
+brand_list = ['오메가', '태그호이어', '롤렉스', '브레게', '바쉐론', '랑에', '파텍필립', '오데마피게']
+
+# 브랜드를 순회하면서 https://cafe.naver.com/ca-fe/home/search/c-articles?q={검색어} 로 검색 후 크롤링
+# > 로그인 불필요
+
+
+
+# rolex listing search https://cafe.naver.com/ca-fe/home/search/c-articles?q=%EB%A1%A4%EB%A0%89%EC%8A%A4
+# > need to rotate keywords to find each of the listing and append them as needed
+# > select priority based on time; remove duplicate listings at processing time
+
+
